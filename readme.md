@@ -38,6 +38,7 @@ We provide a Conda environment file for convenience. **Ensure you have Conda** (
 conda env create -f environment.yml
 conda activate my_rag_env
 ```
+
 Note: Adjust the Conda environment name if it's specified differently in environment.yml.
 
 
@@ -69,18 +70,21 @@ and apply or overwrite these files in your local FlashRAG setup. Reinstall Flash
     ```
     wget https://huggingface.co/datasets/codecodebear/wiki_dump/resolve/main/wiki_dump.jsonl
     ```
-    This 15GB file may take significant time to download.
 
-2. Preprocessing
+   This 15GB file may take significant time to download.
+
+3. Preprocessing
 
     * Run `preprocess.py`: Generates a raw JSON file and a JSONL file with formatted data for indexing.
     * Example usage:
-        ```
-        python preprocess.py
-        ```
+
+      ```
+      python preprocess.py
+      ```
+      
     * Adjust the script or arguments as needed for your dataset.
 
-3. Fairness Evaluation Data
+4. Fairness Evaluation Data
 
     * Run prepare_rag_fairness_data.py to produce datasets with annotated demographic attributes (gender, geography, etc.).
     * Outputs stored in data/trek_2022_fairness.
@@ -92,7 +96,7 @@ We use [FlashRAG’s index-building guide](https://github.com/codecodebear/Flash
 ```json
 {"id": "0", "contents": "Document content here"}
 {"id": "1", "contents": "Another document content"}
-
+```
 
 For dense retrieval methods, especially the popular embedding models, we use faiss to build index. Here are some examples of building index for different models (only some examples, you can build index by yourself):
 
