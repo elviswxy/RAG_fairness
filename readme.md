@@ -62,7 +62,7 @@ and apply or overwrite these files in your local FlashRAG setup. Reinstall Flash
 
 
 
-## **4. Data Preparation <a name="data-preparation"></a>
+## **4. Data Preparation**<a name="data-preparation"></a>
 
 1. Download Wiki Corpus
 
@@ -97,6 +97,7 @@ We use [FlashRAG’s index-building guide](https://github.com/codecodebear/Flash
 For dense retrieval methods, especially the popular embedding models, we use faiss to build index. Here are some examples of building index for different models (only some examples, you can build index by yourself):
 
 * Based on `e5-base-v2` embedding model:
+
 ```
 CUDA_VISIBLE_DEVICES=7 python -m flashrag.retriever.index_builder \
     --retrieval_method e5 \
@@ -111,6 +112,7 @@ CUDA_VISIBLE_DEVICES=7 python -m flashrag.retriever.index_builder \
 ```
 
 * Based on `e5-large-v2` embedding model:
+
 ```
 CUDA_VISIBLE_DEVICES=7 python -m flashrag.retriever.index_builder \
     --retrieval_method e5 \
@@ -125,6 +127,7 @@ CUDA_VISIBLE_DEVICES=7 python -m flashrag.retriever.index_builder \
 ```
 
 * Based on `bm25` retrieval method:
+
 ```
 python -m flashrag.retriever.index_builder \
     --retrieval_method bm25 \
@@ -133,6 +136,7 @@ python -m flashrag.retriever.index_builder \
 ```
 
 If you have bugs with FalshRAG building index, you can try to use Pyserini to build index. Here is an example of building index using Pyserini:
+
 ```
 python -m pyserini.index.lucene \
   --collection JsonCollection \
@@ -142,11 +146,12 @@ python -m pyserini.index.lucene \
   --threads 1 
 ```
 
-## 6. Evaluating <a name="evaluation"></a>
+## **6. Evaluating** <a name="evaluation"></a>
 
 To evaluate the model, you can use the following command:
 
 For example:
+
 ```
 python run_exp.py --method_name 'zero-shot' --split 'flashrag_trek_2022_fairness_irrelevant_male_irrelevant_female_4800' --dataset_name 'trek_2022_fairness' --gpu_id '7' --save_note 'zero-shot_flashrag_trek_2022_fairness_irrelevant_male_irrelevant_female_4800'
 ```
@@ -154,7 +159,7 @@ python run_exp.py --method_name 'zero-shot' --split 'flashrag_trek_2022_fairness
 * The script references my_config.yaml for model paths, hyperparameters, etc.
 * Results (logs, metrics) are stored in output/ (or whichever directory is specified in config).
 
-## 7. Contact <a name="contact"></a>
+## **7. Contact** <a name="contact"></a>
 
 If you have any questions, issues, or suggestions, please reach out via:
 
