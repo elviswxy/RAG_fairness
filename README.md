@@ -65,33 +65,25 @@ and apply or overwrite these files in your local FlashRAG setup. Reinstall Flash
 
 ## **4. Data Preparation**<a name="data-preparation"></a>
 
-1. Download Wiki Corpus
+1. Preprocessing, the code will automatically download the dataset by (`ir_datasets.load("trec-fair/2022/train")`) and preprocess it. The dataset is stored in the `data/` directory.
 
-    ```
-    wget https://huggingface.co/datasets/codecodebear/wiki_dump/resolve/main/wiki_dump.jsonl
-    ```
-
-   This 15GB file may take significant time to download.
-
-3. Preprocessing
-
-    * Run `preprocess.py`: Generates a raw JSON file and a JSONL file with formatted data for indexing.
+    * Run `preprocess_trec_wiki.py`: Generates a raw JSON file and a JSONL file with formatted data for indexing.
     * Example usage:
 
       ```
-      python preprocess.py
+      python preprocess_trec_wiki.py
       ```
       
     * Adjust the script or arguments as needed for your dataset.
 
-4. Fairness Evaluation Data
+2. Generate fairness Evaluation Data
 
     * Run prepare_rag_fairness_data.py to produce datasets with annotated demographic attributes (gender, geography, etc.).
     * Outputs stored in data/trek_2022_fairness.
 
 ## **5. Index Building** <a name="index-building"></a>
 
-We use [FlashRAG’s index-building guide](https://github.com/codecodebear/FlashRAG-SCU/blob/main/docs/building-index.md). Ensure your corpus is in JSONL format:
+We use [FlashRAG’s index-building guide](https://github.com/RUC-NLPIR/FlashRAG/blob/main/docs/original_docs/building-index.md). Ensure your corpus is in JSONL format:
 
 ```json
 {"id": "0", "contents": "Document content here"}
