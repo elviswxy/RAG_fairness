@@ -65,7 +65,7 @@ and apply or overwrite these files in your local FlashRAG setup. Reinstall Flash
 
 ## **4. Data Preparation**<a name="data-preparation"></a>
 
-1. Preprocessing, the code will automatically download the dataset by (`ir_datasets.load("trec-fair/2022/train")`) and preprocess it. The dataset is stored in the `data/` directory.
+1. Preprocessing, the code will automatically download the dataset by (`ir_datasets.load("trec-fair/2022/train")`) and preprocess it. The dataset is stored in the `data/` directory. We also upload our corpus (expecially for building index) on [Huggingface](https://huggingface.co/datasets/SCU-IR/RAG_fairness). You can use it directly.
 
     * Run `preprocess_trec_wiki.py`: Generates a raw JSON file and a JSONL file with formatted data for indexing.
     * Example usage:
@@ -76,7 +76,7 @@ and apply or overwrite these files in your local FlashRAG setup. Reinstall Flash
       
     * Adjust the script or arguments as needed for your dataset.
 
-2. Generate fairness Evaluation Data
+2. Generate fairness Evaluation Data, we also prepared the data within the current `/data` folder. You can download the processed data directly to use (`trec_2022_fairness/`, `trec_gender_2022.tar.gz` and `trec_geo_full_2022.tar.gz`). 
 
     * Run prepare_rag_fairness_data.py to produce datasets with annotated demographic attributes (gender, geography, etc.).
     * Outputs stored in data/trek_2022_fairness.
