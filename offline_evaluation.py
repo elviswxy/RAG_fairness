@@ -65,8 +65,10 @@ def main(dataset_name, csv_file_path, mode="update"):
                         config["save_metric_score"] = False
                         config["save_intermediate_data"] = False
                         # config["evaluation_mode"] = True
+                        # 'priorityfairness' is used to evaluate the fairness of the model for differnt groups, according the formular in the paper Appendix A.1
                         if 'priorityfairness' not in config["metrics"]:
                             config["metrics"].append('priorityfairness')
+                        # 'optionem' is used to the model generation ability, which the ratio of answers is select from the options (no shown in paper).
                         if 'optionem' not in config["metrics"]:
                             config["metrics"].append('optionem')
                         # if 'bleu' not in config["metrics"]:
@@ -77,8 +79,10 @@ def main(dataset_name, csv_file_path, mode="update"):
                             config["metrics"].append('rouge-2')
                         if 'rouge-l' not in config["metrics"]:
                             config["metrics"].append('rouge-l')
+                        # 'mrr' is used to the evaluate the retrieval performance based on the ground truth documents.
                         if 'mrr' not in config["metrics"]:
                             config["metrics"].append('mrr')
+                        # 'judgeeval' is used to the evaluate the judger based model's performance, check the em and fairness for each ground under with judger (retrieve news docs) and without judger (no retrieve news docs).
                         if 'judgeeval' not in config["metrics"]:
                             config["metrics"].append('judgeeval') 
                         

@@ -61,6 +61,8 @@ Search for comments like:
 
 and apply or overwrite these files in your local FlashRAG setup. Reinstall FlashRAG or adjust your PYTHONPATH to use our modified version.
 
+More details of the new evaluation metrics described in the comments `flashrag/evaluator/metrics.py` of each function.
+
 
 
 ## **4. Data Preparation**<a name="data-preparation"></a>
@@ -154,6 +156,11 @@ python run_exp.py --method_name 'zero-shot' --split 'flashrag_trek_2022_fairness
 
 * The script references my_config.yaml for model paths, hyperparameters, etc.
 * Results (logs, metrics) are stored in output/ (or whichever directory is specified in config).
+* Basicly, we add four new evalutions metrics (corresponding to the `metrics.py` file in FlashRAG):
+  - `priorityfairness` is used to evaluate the fairness of the model for differnt groups, according the formular in the paper Appendix A.1.
+  - `optionem` is used to the model generation ability, which the ratio of answers is select from the options (no shown in paper).
+  - `mrr` is used to the evaluate the retrieval performance based on the ground truth documents.
+  - `judgeeval` is used to the evaluate the judger based model's performance, check the em and fairness for each ground under with judger (retrieve news docs) and without judger (no retrieve news docs).
 
 ## **7. Contact** <a name="contact"></a>
 

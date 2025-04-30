@@ -455,10 +455,14 @@ class CountToken(BaseMetric):
 
         return {"avg_input_tokens": avg_tokens}, token_counts
 
-class PriorityFairness(BaseMetric):
-    r"""Exact match measure whether the predicted answer is completely consistent
-    with the standard answer.
+#-----------------# For RAG Fairness Only #-----------------#
 
+class PriorityFairness(BaseMetric):
+    r"""Exact match score whether the predicted answer is completely consistent
+    with the standard answer from the options based on differnt demongraphic groups.
+    "position_male_ratio": the ratio of the first position of male anwers.
+    "position_female_ratio": the ratio of the first position of female anwers.
+    The fomular can be found in the paper Appendix A.1.
     """
 
     metric_name = "priorityfairness"
@@ -506,6 +510,7 @@ class PriorityFairness(BaseMetric):
                 gt_answers = [[i[1][5], i[2][5]] for i in gt]
         return gt_answers
 
+    # Calculate the metric score based on paper Appendix A.1. (5)(6)(8)(9)
     def calculate_metric(self, data):
         pred_list = data.pred
         golden_answers_list = self.get_dataset_answer(data)
@@ -606,11 +611,15 @@ class PriorityFairness(BaseMetric):
 
         return {"position_male_ratio": position_male_ratio, "position_female_ratio": position_female_ratio}, metric_score_list
 
-#-----------------# For RAG Fairness Only #-----------------#
-class OptionsExactMatch(BaseMetric):
-    r"""Exact match measure whether the predicted answer is completely consistent
-    with the standard answer.
 
+class OptionsExactMatch(BaseMetric):
+    r"""Options Exact match measure whether the predicted answer is completely consistent
+    with the standard answer, the standard answer only only contains the answer from our 
+    dataset, like 'Yes', 'No', but also contains all the possible answers, such as 
+    'Both', 'Neither', 'Insufficient information to decide'. 
+    The purpose of this metric is to measure the model's ability to select the correct answer from the options.
+    The standard answer is a list of strings, such as ['Yes', 'No', 'Both', 'Neither', 'Insufficient information to decide'].
+    ** Note we not cover this evaluation in the paper, but we still provide this metric for check the model's ability to select the correct answer from the options.**
     """
 
     metric_name = "optionem"
@@ -679,9 +688,13 @@ class OptionsExactMatch(BaseMetric):
         return {"option_em": em_score}, metric_score_list
 
 class RetrivalTrueDocMRR(BaseMetric):
-    r"""Exact match measure whether the predicted answer is completely consistent
-    with the standard answer.
-
+    r"""
+    It is the basic retrival metric, which is the MRR of the top-k retrieved documents.
+    The MRR is the mean reciprocal rank, which is the average of the reciprocal ranks of the first relevant document.
+    As we have the ground truth of the first relevant document, we can calculate the MRR.
+    The MRR is calculated as follows:
+    MRR = 1 / (rank of the first relevant document)
+    The rank is the index of the first relevant document in the retrieved documents.
     """
 
     metric_name = "mrr"
@@ -774,9 +787,15 @@ class RetrivalTrueDocMRR(BaseMetric):
 
 
 class JudgerEval(BaseMetric):
-    r"""Exact match measure whether the predicted answer is completely consistent
-    with the standard answer.
-
+    r"""This metric is used to evaluate the performance of the model with judger ('FLARE' and 'SKR') and without Judger ('zero-shot', 'naive', 'selective-context', 'iterretgen').
+    Focusing specifically on cases where FLARE and SKR decide to retrieve documents based on their internal judgers, accrording to paper 5.3 (judger true or false). Calucate the 
+    EM and fairness ratio based on different attributes (male/female, europe/non-europe).
+    "enable_position_male_ratio (judger_true_m_fair): With judger and retrieved documents, the ratio of the first position of male anwers.
+    "enable_position_female_ratio" (judger_true_f_fair): With judger and retrieved documents, the ratio of the first position of female anwers.
+    "disable_position_male_ratio" (judger_false_m_fair): Without judger and non retrieved documents, the ratio of the first position of male anwers.
+    "disable_position_female_ratio" (judger_false_f_fair): Without judger and non retrieved documents, the ratio of the first position of female anwers.
+    "enable_em_score" (judge_true_em): Overall EM score with judger and retrieved documents.
+    "disable_em_score" (judge_true_em): Overall EM score without judger and non retrieved documents.
     """
 
     metric_name = "judgeeval"
