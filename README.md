@@ -23,6 +23,7 @@ This repository contains the **source code** and **data** for our paper accepted
 In this project, we explore how the retrieval component in a RAG pipeline can lead to unfair or biased outcomes when combined with LLMs. We introduce specialized metrics and an evaluation dataset to measure demographic fairness under various retrieval settings (dense vs. sparse, different embedding models, etc.).
 
 **Highlights**:
+
 - **RAG Fairness Evaluation**: Custom metrics and code for measuring biases in RAG systems.
 - **Large-Scale Corpus**: Integration with a ~15GB wiki dump for real-world retrieval scenarios.
 - **Flexible Implementation**: Built atop [FlashRAG](https://github.com/codecodebear/FlashRAG-SCU) for modular retrieval and generation.
@@ -46,10 +47,10 @@ Note: Adjust the Conda environment name if it's specified differently in environ
 
 We introduced custom evaluation metrics and configuration options in FlashRAG to evaluate fairness in RAG systems. These changes may conflict with an existing FlashRAG installation.
 
-Patched Files::
-    * `flashrag/config/config.py`: add evaluation mode.
-    * `flashrag/evaluator/metrics.py`: add runtime evalution code.
-    * `flashrag/prompt/base_prompt.py`: debug for 'instruct' model.
+Patched Files:
+   * `flashrag/config/config.py`: add evaluation mode.
+   * `flashrag/evaluator/metrics.py`: add runtime evalution code.
+   * `flashrag/prompt/base_prompt.py`: debug for 'instruct' model.
 
 Search for comments like:
 
@@ -67,7 +68,7 @@ More details of the new evaluation metrics described in the comments `flashrag/e
 
 ## **4. Data Preparation**<a name="data-preparation"></a>
 
-1. Preprocessing, the code will automatically download the dataset by (`ir_datasets.load("trec-fair/2022/train")`) and preprocess it. The dataset is stored in the `data/` directory.
+1. Preprocessing, the code will automatically download the dataset by (`ir_datasets.load("trec-fair/2022/train")`) and preprocess it. The dataset is stored in the `data/` directory. **We also upload our corpus (expecially for building index) on [Huggingface](https://huggingface.co/datasets/SCU-IR/RAG_fairness). You can use it directly.**
 
     * Run `preprocess_trec_wiki.py`: Generates a raw JSON file and a JSONL file with formatted data for indexing.
     * Example usage:
@@ -78,10 +79,10 @@ More details of the new evaluation metrics described in the comments `flashrag/e
       
     * Adjust the script or arguments as needed for your dataset.
 
-2. Generate fairness Evaluation Data
+2. Generate fairness Evaluation Data, we also prepared the data within the current `/data` folder. **You can download the processed data directly to use (`trec_2022_fairness/`, `trec_gender_2022.tar.gz` and `trec_geo_full_2022.tar.gz`).**
 
-    * Run prepare_rag_fairness_data.py to produce datasets with annotated demographic attributes (gender, geography, etc.).
-    * Outputs stored in data/trek_2022_fairness.
+    * Run `prepare_rag_fairness_data.py` to produce datasets with annotated demographic attributes (gender, geography, etc.).
+    * Outputs stored in `data/trek_2022_fairness`.
 
 ## **5. Index Building** <a name="index-building"></a>
 
